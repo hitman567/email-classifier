@@ -15,7 +15,7 @@ from pathlib import Path
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, f1_score
-from data_loader import load_dataset
+from src.data_loader import load_dataset
 
 def train_baseline(train_df, val_df, max_features=10000):
     """
