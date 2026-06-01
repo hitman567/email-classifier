@@ -61,7 +61,9 @@ def download_dataset(data_dir='data'):
     # Save to disk
     data_path = Path(data_dir)
     data_path.mkdir(parents=True, exist_ok=True)
-    
+    (data_path / 'processed').mkdir(exist_ok=True)
+    (data_path / 'raw').mkdir(exist_ok=True)
+
     train_df.to_csv(data_path / 'processed' / 'train.csv', index=False)
     val_df.to_csv(data_path / 'processed' / 'val.csv', index=False)
     test_df.to_csv(data_path / 'processed' / 'test.csv', index=False)

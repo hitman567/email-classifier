@@ -6,12 +6,14 @@ Expected performance: ~80-82% accuracy.
 """
 
 import os
+import sys
 import json
 import time
 import joblib
 import pandas as pd
 import numpy as np
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, f1_score
