@@ -6,8 +6,11 @@ Uses Focal Loss to handle class imbalance.
 """
 
 import os
+import sys
 import json
 import time
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import torch
 import torch.nn as nn
