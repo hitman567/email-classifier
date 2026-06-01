@@ -22,7 +22,7 @@ def load_models():
     # Load baseline (TF-IDF + LogReg)
     try:
         tfidf_vectorizer = joblib.load('models/tfidf_vectorizer.joblib')
-        logistic_model = joblib.load('models/logistic_model.joblib')
+        logistic_model = joblib.load('models/logistic_regression.joblib')
         baseline_loaded = True
         print("Baseline model loaded")
     except Exception as e:
@@ -33,11 +33,11 @@ def load_models():
     
     # Load RoBERTa model
     try:
-        device = torch.device('cude' if torch.cuda.is_available() else 'cpu')
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         tokenizer = RobertaTokenizer.from_pretrained('models/roberta_tokenizer')
         model = RobertaForSequenceClassification.from_pretrained(
             'roberta-base',
-            num_lebels=len(categories)
+            num_labels=len(categories)
         )
         
         # Load checkpoint
@@ -60,9 +60,10 @@ def load_models():
         'categories': categories,
         'baseline_loaded': baseline_loaded,
         'tfidf_vectorizer': tfidf_vectorizer,
-        'tfidf_vectorizer': tfidf_vectorizer,
         'logistic_model': logistic_model,
-        'roberta-loaded': model,
+        'roberta_loaded': roberta_loaded,
+        'roberta_model': model,
+        'roberta_tokenizer': tokenizer,
         'device': device
     }
 
@@ -188,9 +189,11 @@ with gr.Blocks(title="Email Classification Demo") as demo:
     - **RoBERTa**: {'Loaded' if models['roberta_loaded'] else 'Not found'}
     
     ### 📈 Performance Metrics
-    - **Baseline Accuracy**: 81.34%
-    - **RoBERTa Accuracy**: 77.19%
-    - **Improvement**: +2.38 percentage points
+    | | Accuracy | Macro-F1 |
+    |---|---|---|
+    | Baseline (TF-IDF) | 74.70% | 73.80% |
+    | RoBERTa (fine-tuned) | 77.19% | 76.18% |
+    | **Improvement** | **+2.49pp** | **+2.38pp** |
     
     ### 📚 Dataset: 20 Newsgroups
     - 20 email-like categories
